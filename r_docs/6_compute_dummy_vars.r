@@ -13,19 +13,19 @@ dt[, P0010001 := 1]
 #### Hispanic/Not Hispanic #### 
 # For each value in header_hisp, set appropriate P var to 1 
 for(row in 1:nrow(header_hisp)){
-  dt[, header_hisp$header[row] := fifelse(hisp == header_hisp$hisp[row], 1, 0)]
+  dt[, header_hisp$header[row] := fifelse(hisp == header_hisp$recode[row], 1, 0)]
 }
 
 #### Sex #### 
 # For each value in header_sex, set appropriate P var to 1 
 for(row in 1:nrow(header_sex)){
-  dt[, header_sex$header[row] := fifelse(sex == header_sex$sex[row], 1, 0)]
+  dt[, header_sex$header[row] := fifelse(sex == header_sex$recode[row], 1, 0)]
 }
 
 #### Race7 #### 
 # For each value in header_race7, set appropriate P var to 1 
 for(row in 1:nrow(header_race7)){
-  dt[, header_race7$header[row] := fifelse(race7 == header_race7$race7[row], 1, 0)]
+  dt[, header_race7$header[row] := fifelse(race7 == header_race7$recode[row], 1, 0)]
 }
 
 #### Hispanic by Race7 ####
