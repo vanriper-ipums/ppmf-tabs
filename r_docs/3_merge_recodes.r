@@ -11,7 +11,10 @@ setkey(dt, c("qsex", "cenhisp", "cenrace", "qage"))
 setkey(sex, "qsex")
 setkey(hisp, "cenhisp")
 setkey(race7, "cenrace")
+setkey(race63, "cenrace")
 setkey(age12, "qage")
+setkey(voting, "qage")
+setkey(gqtype, "gqtype")
 
 #### Sex ####
 sex[dt]
@@ -22,5 +25,14 @@ hisp[dt]
 #### Race7 ####
 race7[dt]
 
+#### Race63 ####
+race63[dt]
+
 #### Age12 ####
 age12[dt]
+
+#### Voting age #### 
+voting[dt]
+
+#### Gqtype #### 
+gqtype[dt]
