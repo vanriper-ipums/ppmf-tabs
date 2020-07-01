@@ -33,3 +33,9 @@ for(row in 1:nrow(header_race7)){
 for(row in 1:nrow(header_hisp_race7)){
   dt[, header_hisp_race7$header[row] := fifelse((hisp == header_hisp_race7$hisp[row] & race7 == header_hisp_race7$race7[row]), 1, 0)]
 }
+
+#### Sex by Age_p12 #### 
+# For each value in header_sex_age12, set appropriate P var to 1
+for(row in 1:nrow(header_sex_age12)){
+  dt[, header_sex_age12$header[row] := fifelse((sex == header_sex_age12$sex[row] & age_p12 == header_sex_age12$age_p12[row]), 1, 0)]
+}
