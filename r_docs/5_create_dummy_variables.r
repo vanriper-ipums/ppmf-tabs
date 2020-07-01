@@ -2,7 +2,8 @@
 # Author: David Van Riper
 # Created: 2020-07-01
 # 
-# This script adds dummy variables to the dt.  
+# This script adds dummy variables to the dt. The initial version just creates a character vector 
+# in this script. Future versions may read those in from a file
 
 require(data.table)
 
