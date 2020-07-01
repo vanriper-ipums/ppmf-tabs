@@ -31,9 +31,12 @@ race11 <- fread("data/recodes/race11.csv", colClasses = recode_col_classes)
 # 7-category race recode 
 race7 <- fread("data/recodes/race7.csv", colClasses = recode_col_classes)
 
-# Race alone or in combination tally recode - this tells you the number of races recorded by the 
+# tally count recode - this tells you the number of races recorded by the 
 # respondant 
 race_tally <- fread("data/recodes/raceTally.csv", colClasses = recode_col_classes) 
+
+# Race alone or in combo recode
+race_alone_combo <- fread("data/recodes/race_alone_combo.csv", colClasses = c("character", "integer", "integer", "integer", "integer", "integer", "integer"))        
 
 #### Read in sex recode ####
 
