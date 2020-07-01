@@ -42,10 +42,5 @@ uniq_race11 <- unique(uniq_race11)
 uniq_hisp <- unique(uniq_hisp)
 uniq_rtype <- unique(uniq_rtype)
 
-#### Cartesian joins ####
-sex_age12 <- cartesian_join(uniq_sex, uniq_age12)
-#voting_race63 <- cartesian_join(uniq_voting, uniq_race63)
-hisp_race7 <- cartesian_join(uniq_hisp, uniq_race7)
-hisp_race63 <- cartesian_join(uniq_hisp, uniq_race63)
-hisp_race11 <- cartesian_join(uniq_hisp, uniq_race11)
+
 
