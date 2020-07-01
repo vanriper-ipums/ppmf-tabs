@@ -50,4 +50,7 @@ hisp <- fread("data/recodes/cenhisp.csv", colClasses = recode_col_classes)
 # Recode rtype from character to integer value
 rtype <- fread("data/recodes/rtype.csv", colClasses = recode_col_classes)
 
+#### Read in gqtype recode #### 
 
+# Recode gqtype from character to integer value
+gqtype <- fread("data/recodes/gqtype.csv", colClasses = recode_col_classes)
