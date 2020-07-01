@@ -51,4 +51,4 @@ nhgis_col_classes <- c("character",
 
 # 0. Read in block csv to a data.table. We only need colClasses in fread because NHGIS already has 
 # column headers in the CSV.  
-dt <- fread("data/nhgis1329_ds172_2010_block.csv", sep = ",", colClasses = nhgis_col_classes)
+dt_nhgis <- fread("data/nhgis1329_ds172_2010_block.csv", sep = ",", colClasses = nhgis_col_classes)
