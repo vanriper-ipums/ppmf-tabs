@@ -7,7 +7,7 @@
 require(data.table)
 
 #### Set keys in dt and recodes ####
-setkey(dt, c("qsex", "cenhisp", "cenrace", "qage"))
+setkey(dt, c("qsex", "cenhisp", "cenrace", "qage", "gqtype"))
 setkey(sex, "qsex")
 setkey(hisp, "cenhisp")
 setkey(race7, "cenrace")
