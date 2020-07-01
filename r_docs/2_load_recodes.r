@@ -22,6 +22,12 @@ age12 <- fread("data/recodes/age_p12.csv")
 
 #### Read in race recodes ####
 
+# 63-category race recode (essentially creates numeric version of cenrace)
+race63 <- fread("data/recodes/race63.csv", colClasses = recode_col_classes)
+
+# 11-category race recode (for two, three, four, five, six race totals)
+race11 <- fread("data/recodes/race11.csv", colClasses = recode_col_classes)
+
 # 7-category race recode 
 race7 <- fread("data/recodes/race7.csv", colClasses = recode_col_classes)
 
