@@ -40,3 +40,33 @@ for(row in 1:nrow(header_hisp_race7)){
 for(row in 1:nrow(header_sex_age12)){
   dt[, header_sex_age12$header[row] := fifelse((sex == header_sex_age12$sex[row] & age_p12 == header_sex_age12$age_p12[row]), 1, 0)]
 }
+
+#### Major GQ type #### 
+# For each value in header_major_gqtype, set appropriate P var to 1
+for(row in 1:nrow(header_major_gqtype)){
+  dt[, header_major_gqtype$header[row] := fifelse(gqtypen == header_major_gqtype$recode[row], 1, 0)]
+}
+
+#### Race63 #### 
+# For each value in header_race63, set appropriate P var to 1
+for(row in 1:nrow(header_race63)){
+  dt[, header_race63$header[row] := fifelse(race63 == header_race63$recode[row], 1, 0)]
+}
+
+#### Hispanic or Not Hispanice by Race63 #### 
+# For each value in header_hisp_race63, set appropriate P var to 1
+for(row in 1:nrow(header_hisp_race63)){
+  dt[, header_hisp_race63$header[row] := fifelse((hisp == header_hisp_race63$hisp[row] & race63 == header_hisp_race63$race7[row]), 1, 0)]
+}
+
+#### Race63 by Voting age #### 
+# For each value in header_race63_voting_age, set appropriate P var to 1
+for(row in 1:nrow(header_race63_voting_age)){
+  dt[, header_race63_voting_age$header[row] := fifelse((voting_age == header_race63_voting_age$voting_age[row] & race63 == header_hisp_race63_voting_age$race63[row]), 1, 0)]
+}
+
+#### Hispanic or Not Hispanice by Race63 by Voting age ####  
+# For each value in header_hisp_race63_voting_age, set appropriate P var to 1
+for(row in 1:nrow(header_hisp_race63_voting_age)){
+  dt[, header_hisp_race63_voting_age$header[row] := fifelse((voting_age == header_hisp_race63_voting_age$voting_age[row] & hisp == header_hisp_race63_voting_age$hisp[row] & race63 == header_hisp_race63_voting_age$race63[row]), 1, 0)]
+}
