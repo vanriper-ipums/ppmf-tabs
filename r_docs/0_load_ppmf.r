@@ -6,7 +6,7 @@
 # written to support the microdata released on 2020-07-01. 
 # 
 
-library(data.table)
+require(data.table)
 
 # Constants 
 
