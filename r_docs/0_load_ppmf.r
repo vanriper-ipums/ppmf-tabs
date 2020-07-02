@@ -14,7 +14,7 @@ library(data.table)
 ppmf_col_classes <- c("character", "character", "character", "character", "character", "character", "character", "character", "character", "integer", "character", "character")
 
 # ppmf column names
-ppmf_col_names <- c("vintage", "tabblkst", "tabblkcou", "tabtractce", "tabblkgrpce", "tabblk", "rtype", "gqtype", "qsex", "qage", "cenhisp", "cenrace")
+#ppmf_col_names <- c("vintage", "tabblkst", "tabblkcou", "tabtractce", "tabblkgrpce", "tabblk", "rtype", "gqtype", "qsex", "qage", "cenhisp", "cenrace")
 
 # 0. Read in CSV to a dt 
-dt <- fread("", sep = ",", colClasses = ppmf_col_classes, col.names = ppmf_col_names)
+dt <- fread("data/ppmf_test.csv", sep = ",", colClasses = ppmf_col_classes)
