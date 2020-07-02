@@ -56,7 +56,7 @@ for(row in 1:nrow(header_race63)){
 #### Hispanic or Not Hispanice by Race63 #### 
 # For each value in header_hisp_race63, set appropriate P var to 1
 for(row in 1:nrow(header_hisp_race63)){
-  dt[, header_hisp_race63$header[row] := fifelse((hisp == header_hisp_race63$hisp[row] & race63 == header_hisp_race63$race7[row]), 1, 0)]
+  dt[, header_hisp_race63$header[row] := fifelse((hisp == header_hisp_race63$hisp[row] & race63 == header_hisp_race63$race63[row]), 1, 0)]
 }
 
 #### Race63 by Voting age #### 
