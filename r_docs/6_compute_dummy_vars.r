@@ -92,6 +92,11 @@ for(row in 1:nrow(header_major_gqtype)){
   dt[, header_major_gqtype$header[row] := fifelse(gqtypen == header_major_gqtype$recode[row], 1, 0)]
 }
 
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H80003_dp:H80010_dp]
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p42.csv")
 
@@ -109,6 +114,11 @@ dt[, (vars) := 0]
 for(row in 1:nrow(header_sex)){
   dt[, header_sex$header[row] := fifelse(sex == header_sex$recode[row], 1, 0)]
 }
+
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H76002_dp:H76026_dp]
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p12_sex.csv")
@@ -128,6 +138,11 @@ for(row in 1:nrow(header_sex_age12)){
   dt[, header_sex_age12$header[row] := fifelse((sex == header_sex_age12$sex[row] & age_p12 == header_sex_age12$age_p12[row]), 1, 0)]
 }
 
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H76003_dp:H76049_dp]
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p12.csv")
 
@@ -145,6 +160,11 @@ dt[, (vars) := 0]
 for(row in 1:nrow(header_race63)){
   dt[, header_race63$header[row] := fifelse(race63 == header_race63$recode[row], 1, 0)]
 }
+
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H72003_dp:H72071_dp]
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p8.csv")
@@ -164,6 +184,11 @@ for(row in 1:nrow(header_hisp_race63)){
   dt[, header_hisp_race63$header[row] := fifelse((hisp == header_hisp_race63$hisp[row] & race63 == header_hisp_race63$race63[row]), 1, 0)]
 }
 
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H73005_dp:H73073_dp]
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p9.csv")
 
@@ -182,6 +207,11 @@ for(row in 1:nrow(header_race63_voting_age)){
   dt[, header_race63_voting_age$header[row] := fifelse((voting_age == header_race63_voting_age$voting_age[row] & race63 == header_hisp_race63_voting_age$race63[row]), 1, 0)]
 }
 
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H74003_dp:H74071_dp]
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p10.csv")
 
@@ -199,6 +229,11 @@ dt[, (vars) := 0]
 for(row in 1:nrow(header_hisp_race63_voting_age)){
   dt[, header_hisp_race63_voting_age$header[row] := fifelse((voting_age == header_hisp_race63_voting_age$voting_age[row] & hisp == header_hisp_race63_voting_age$hisp[row] & race63 == header_hisp_race63_voting_age$race63[row]), 1, 0)]
 }
+
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H75005_dp:H75073_dp]
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p11.csv")
