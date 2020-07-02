@@ -8,7 +8,8 @@ require(data.table)
 
 #### Total population #### 
 # This dummy is easiast to fill in - all records get a 1
-dt[, P0010001 := 1]
+#dt[, P0010001 := 1]
+dt[, H7V001 := 1]
 
 #### Hispanic/Not Hispanic #### 
 # For each value in header_hisp, set appropriate P var to 1 
