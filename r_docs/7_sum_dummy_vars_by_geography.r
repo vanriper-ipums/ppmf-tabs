@@ -7,6 +7,11 @@
 require(data.table)
 
 #### Sum dummy vars (specified in the .SDcols parameter) for specific geographies ####
-county <- dt[, lapply(.SD, sum),
-     by = .(TABBLKST, TABBLKCOU),
-     .SDcols = H7Y002_dp:H7V001_dp]
+# need to modify the variable options in the .SDcols based on what I use!
+# county <- dt[, lapply(.SD, sum),
+#      by = .(TABBLKST, TABBLKCOU),
+#      .SDcols = H7Y002_dp:H7V001_dp]
+
+block <- dt[, lapply(.SD, sum),
+             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+             .SDcols = H7Y002_dp:H7V001_dp]
