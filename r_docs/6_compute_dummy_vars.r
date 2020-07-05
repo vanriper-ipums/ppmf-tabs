@@ -6,6 +6,9 @@
 
 require(data.table)
 
+#### Source the correct_column_order.r script #### 
+source("r_docs/correct_column_order.r")
+
 #### Total population #### 
 # This dummy is easiast to fill in - all records get a 1
 dt[, H7V001_dp := 1]
