@@ -205,13 +205,34 @@ block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H72003_dp:H72071_dp]
 
+# Calculate subtotals/totals
+# Pop of one race
+block[, H72002_dp := H72003_dp + H72004_dp + H72005_dp + H72006_dp + H72007_dp + H72008_dp]
+# Pop of 6 races 
+block[, H72070_dp := H72071_dp]
+# Pop of 5 races
+block[, H72063_dp := H72064_dp + H72065_dp + H72066_dp + H72067_dp + H72068_dp + H72069_dp]
+# Pop of 4 races
+block[, H72047_dp := H72048_dp + H72049_dp + H72050_dp + H72051_dp + H72052_dp + H72053_dp + H72054_dp +  H72055_dp + H72056_dp + H72057_dp + H72058_dp + H72059_dp + H72060_dp + H72061_dp + H72062_dp]
+# Pop of 3 races 
+block[, H72026_dp := H72027_dp + H72028_dp + H72029_dp + H72030_dp + H72031_dp + H72032_dp + H72033_dp +  H72034_dp + H72035_dp + H72036_dp + H72037_dp + H72038_dp + H72039_dp + H72040_dp + H72041_dp + H72042_dp + H72043_dp + H72044_dp + H72045_dp + H72046_dp]
+# Pop of 2 races
+block[, H72010_dp := H72011_dp + H72012_dp + H72013_dp + H72014_dp + H72015_dp + H72016_dp + H72017_dp +  H72018_dp + H72019_dp + H72020_dp + H72021_dp + H72022_dp + H72023_dp + H72024_dp + H72025_dp]
+# Pop of 2 or more races
+block[, H72009_dp := H72010_dp + H72026_dp + H72047_dp + H72063_dp + H72070_dp]
+# Total popualtion 
+block[, H72001_dp := H72002_dp + H72009_dp]
+
+# Re-order columns 
+setcolorder(block, cols_p8)
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p8.csv")
 
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Hispanic or Not Hispanice by Race63 #### 
+#### Hispanic or Not Hispanic by Race63 #### 
 # Create vector with dummy var names 
 vars <- header_hisp_race63$header
 
@@ -251,13 +272,34 @@ block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H74003_dp:H74071_dp]
 
+# Calculate subtotals/totals
+# Pop of one race
+block[, H74002_dp := H74003_dp + H74004_dp + H74005_dp + H74006_dp + H74007_dp + H74008_dp]
+# Pop of 6 races 
+block[, H74070_dp := H74071_dp]
+# Pop of 5 races
+block[, H74063_dp := H74064_dp + H74065_dp + H74066_dp + H74067_dp + H74068_dp + H74069_dp]
+# Pop of 4 races
+block[, H74047_dp := H74048_dp + H74049_dp + H74050_dp + H74051_dp + H74052_dp + H74053_dp + H74054_dp +  H74055_dp + H74056_dp + H74057_dp + H74058_dp + H74059_dp + H74060_dp + H74061_dp + H74062_dp]
+# Pop of 3 races 
+block[, H74026_dp := H74027_dp + H74028_dp + H74029_dp + H74030_dp + H74031_dp + H74032_dp + H74033_dp +  H74034_dp + H74035_dp + H74036_dp + H74037_dp + H74038_dp + H74039_dp + H74040_dp + H74041_dp + H74042_dp + H74043_dp + H74044_dp + H74045_dp + H74046_dp]
+# Pop of 2 races
+block[, H74010_dp := H74011_dp + H74012_dp + H74013_dp + H74014_dp + H74015_dp + H74016_dp + H74017_dp +  H74018_dp + H74019_dp + H74020_dp + H74021_dp + H74022_dp + H74023_dp + H74024_dp + H74025_dp]
+# Pop of 2 or more races
+block[, H74009_dp := H74010_dp + H74026_dp + H74047_dp + H74063_dp + H74070_dp]
+# Total popualtion 
+block[, H74001_dp := H74002_dp + H74009_dp]
+
+# Re-order columns 
+setcolorder(block, cols_p10)
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p10.csv")
 
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Hispanic or Not Hispanice by Race63 by Voting age #### 
+#### Hispanic or Not Hispanic by Race63 by Voting age #### 
 # Create vector with dummy var names 
 vars <- header_hisp_race63_voting_age$header
 
