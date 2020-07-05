@@ -43,7 +43,7 @@ race_alone_combo <- fread("data/recodes/race_alone_combo.csv", colClasses = c("c
 # Recode sex from character to integer value
 sex <- fread("data/recodes/sex.csv", colClasses = recode_col_classes)
 
-#### Read in sex recode ####
+#### Read in Hispanic recode ####
 
 # Recode cenhisp from character to integer value
 hisp <- fread("data/recodes/cenhisp.csv", colClasses = recode_col_classes)
