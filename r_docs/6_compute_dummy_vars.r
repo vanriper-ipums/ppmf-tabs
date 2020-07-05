@@ -249,6 +249,27 @@ block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H73005_dp:H73073_dp]
 
+# Subtotals and totals 
+# Pop of 6 or more races 
+block[, H73072_dp := H73073_dp]
+# Pop of 5 races
+block[, H73065_dp := H73066_dp + H73067_dp + H73068_dp + H73069_dp + H73070_dp + H73071_dp]
+# Pop of 4 races
+block[, H73049_dp := H73050_dp + H73051_dp + H73052_dp + H73053_dp + H73054_dp + H73055_dp + H73056_dp + H73057_dp + H73058_dp + H73059_dp + H73060_dp + H73061_dp + H73062_dp + H73063_dp + H73064_dp]
+# Pop of 3 races
+block[, H73028_dp := H73029_dp + H73030_dp + H73031_dp + H73032_dp + H73033_dp + H73034_dp + H73035_dp + H73036_dp + H73037_dp + H73038_dp + H73039_dp + H73040_dp + H73041_dp + H73042_dp + H73043_dp + H73044_dp + H73045_dp + H73046_dp + H73047_dp + H73048_dp]
+# Pop of 2 races
+block[, H73012_dp := H73013_dp + H73014_dp + H73015_dp + H73016_dp + H73017_dp + H73018_dp + H73019_dp + H73020_dp + H73021_dp + H73022_dp + H73023_dp + H73024_dp + H73025_dp + H73026_dp + H73027_dp]
+# Pop of 2 or more races
+block[, H73011_dp := H73012_dp + H73028_dp + H73049_dp + H73065_dp + H73072_dp]
+# Pop of 1 race
+block[, H73004_dp := H73005_dp + H73006_dp + H73007_dp + H73008_dp + H73009_dp + H730010_dp]
+# Non-Hispanic total 
+block[, H73003_dp := H73004_dp + H73011_dp]
+
+# Re-order columns 
+# setcolorder(block, cols_p9)
+
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p9.csv")
 
@@ -315,6 +336,24 @@ for(row in 1:nrow(header_hisp_race63_voting_age)){
 block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H75005_dp:H75073_dp]
+
+# Subtotals and totals 
+# Pop of 6 or more races 
+block[, H75072_dp := H75073_dp]
+# Pop of 5 races
+block[, H75065_dp := H75066_dp + H75067_dp + H75068_dp + H75069_dp + H75070_dp + H75071_dp]
+# Pop of 4 races
+block[, H75049_dp := H75050_dp + H75051_dp + H75052_dp + H75053_dp + H75054_dp + H75055_dp + H75056_dp + H75057_dp + H75058_dp + H75059_dp + H75060_dp + H75061_dp + H75062_dp + H75063_dp + H75064_dp]
+# Pop of 3 races
+block[, H75028_dp := H75029_dp + H75030_dp + H75031_dp + H75032_dp + H75033_dp + H75034_dp + H75035_dp + H75036_dp + H75037_dp + H75038_dp + H75039_dp + H75040_dp + H75041_dp + H75042_dp + H75043_dp + H75044_dp + H75045_dp + H75046_dp + H75047_dp + H75048_dp]
+# Pop of 2 races
+block[, H75012_dp := H75013_dp + H75014_dp + H75015_dp + H75016_dp + H75017_dp + H75018_dp + H75019_dp + H75020_dp + H75021_dp + H75022_dp + H75023_dp + H75024_dp + H75025_dp + H75026_dp + H75027_dp]
+# Pop of 2 or more races
+block[, H75011_dp := H75012_dp + H75028_dp + H75049_dp + H75065_dp + H75072_dp]
+# Pop of 1 race
+block[, H75004_dp := H75005_dp + H75006_dp + H75007_dp + H75008_dp + H75009_dp + H750010_dp]
+# Non-Hispanic total 
+block[, H75003_dp := H75004_dp + H75011_dp]
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p11.csv")
