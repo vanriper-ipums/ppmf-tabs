@@ -311,7 +311,7 @@ block[, H74026_dp := H74027_dp + H74028_dp + H74029_dp + H74030_dp + H74031_dp +
 block[, H74010_dp := H74011_dp + H74012_dp + H74013_dp + H74014_dp + H74015_dp + H74016_dp + H74017_dp +  H74018_dp + H74019_dp + H74020_dp + H74021_dp + H74022_dp + H74023_dp + H74024_dp + H74025_dp]
 # Pop of 2 or more races
 block[, H74009_dp := H74010_dp + H74026_dp + H74047_dp + H74063_dp + H74070_dp]
-# Total popualtion 
+# Total population 18 years and older 
 block[, H74001_dp := H74002_dp + H74009_dp]
 
 # Re-order columns 
