@@ -34,7 +34,7 @@ block <- dt[, lapply(.SD, sum),
 block[, H7X001_dp := H7V001_dp]
 
 # Re-order columns
-setcolorder(block, col_order_p1_p3)
+setcolorder(block, cols_p1_p3)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p1_p3.csv")
@@ -64,7 +64,7 @@ block <- dt[, lapply(.SD, sum),
 block[, H7Y001_dp := H7Y002_dp + H7Y003_dp]
 
 # Re-order columns 
-setcolorder(block, col_order_p4)
+setcolorder(block, cols_p4)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p4.csv")
@@ -95,7 +95,7 @@ block[, H7Z010_dp := H7Z011_dp + H7Z012_dp + H7Z013_dp + H7Z014_dp + H7Z015_dp +
 block[, H7Z001_dp := H7Z002_dp + H7Z010_dp]
 
 # Re-order columns
-setcolorder(block, col_order_p5)
+setcolorder(block, cols_p5)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p5.csv")
@@ -123,7 +123,7 @@ block <- dt[, lapply(.SD, sum),
 # Generate correct subtotals and total pop in group quarters 
 block[, H80002_dp := H80003_dp + H80004_dp + H80005_dp + H80006_dp]
 block[, H80007_dp := H80008_dp + H80009_dp + H80010_dp]
-block[, H80001_dp : H80002_dp + H80007_dp]
+block[, H80001_dp := H80002_dp + H80007_dp]
 
 # Re-order columns 
 setcolorder(block, cols_p42)
