@@ -266,7 +266,7 @@ block[, H73012_dp := H73013_dp + H73014_dp + H73015_dp + H73016_dp + H73017_dp +
 # Pop of 2 or more races
 block[, H73011_dp := H73012_dp + H73028_dp + H73049_dp + H73065_dp + H73072_dp]
 # Pop of 1 race
-block[, H73004_dp := H73005_dp + H73006_dp + H73007_dp + H73008_dp + H73009_dp + H730010_dp]
+block[, H73004_dp := H73005_dp + H73006_dp + H73007_dp + H73008_dp + H73009_dp + H73010_dp]
 # Non-Hispanic total 
 block[, H73003_dp := H73004_dp + H73011_dp]
 
@@ -354,7 +354,7 @@ block[, H75012_dp := H75013_dp + H75014_dp + H75015_dp + H75016_dp + H75017_dp +
 # Pop of 2 or more races
 block[, H75011_dp := H75012_dp + H75028_dp + H75049_dp + H75065_dp + H75072_dp]
 # Pop of 1 race
-block[, H75004_dp := H75005_dp + H75006_dp + H75007_dp + H75008_dp + H75009_dp + H750010_dp]
+block[, H75004_dp := H75005_dp + H75006_dp + H75007_dp + H75008_dp + H75009_dp + H75010_dp]
 # Non-Hispanic total 
 block[, H75003_dp := H75004_dp + H75011_dp]
 
