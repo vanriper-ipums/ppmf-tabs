@@ -22,7 +22,7 @@ source("r_docs/correct_column_order.r")
 
 #### Constant "character" vector #### 
 char_all <- rep("character", 4)
-#geog_vars <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
+geog_vars <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
 
 #### Create vector if "integer" values #### 
 #int_p1_p3 <- rep("integer", 8)
