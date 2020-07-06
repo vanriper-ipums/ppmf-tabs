@@ -57,3 +57,9 @@ dt_nhgis <- fread("data/nhgis1329_ds172_2010_block.csv", sep = ",", colClasses =
 delete_nhgis_vars <- c("YEAR", "REGIONA", "DIVISIONA", "STATE", "COUNTY", "CONCITA", "RES_ONLYA", "TRUSTA", "AITSCEA", "TTRACTA", "TBLKGRPA", "METDIVA", "CSAA", "NECTAA", "NECTADIVA", "CNECTAA", "URBRURALA", "ZCTA5A", "SUBMCDA", "SDELMA", "SDSECA", "SABINSA", "NAME", "H7V001")
 
 dt_nhgis[, (delete_nhgis_vars) := NULL]
+
+#### Set name for GISJOIN to gisjoin ####
+setnames(dt_nhgis, "GISJOIN", "gisjoin")
+
+#### Set key for dt_nhgis data.table #### 
+setkey(dt_nhgis, gisjoin)
