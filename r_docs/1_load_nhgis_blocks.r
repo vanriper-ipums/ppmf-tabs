@@ -54,6 +54,6 @@ nhgis_col_classes <- c("character",
 dt_nhgis <- fread("data/nhgis1329_ds172_2010_block.csv", sep = ",", colClasses = nhgis_col_classes)
 
 #### Delete fields that we're not using now #### 
-delete_vars <- c("YEAR", "REGIONA", "DIVISIONA", "STATE", "COUNTY", "CONCITA", "RES_ONLYA", "TRUSTA", "AITSCEA", "TTRACTA", "TBLKGRPA", "METDIVA", "CSAA", "NECTAA", "NECTADIVA", "CNECTAA", "URBRURALA", "ZCTA5A", "SUBMCDA", "SDELMA", "SDSECA", "SABINSA", "NAME", "H7V001")
+delete_nhgis_vars <- c("YEAR", "REGIONA", "DIVISIONA", "STATE", "COUNTY", "CONCITA", "RES_ONLYA", "TRUSTA", "AITSCEA", "TTRACTA", "TBLKGRPA", "METDIVA", "CSAA", "NECTAA", "NECTADIVA", "CNECTAA", "URBRURALA", "ZCTA5A", "SUBMCDA", "SDELMA", "SDSECA", "SABINSA", "NAME", "H7V001")
 
-dt_nhgis[, (delete_vars) := NULL]
+dt_nhgis[, (delete_nhgis_vars) := NULL]
