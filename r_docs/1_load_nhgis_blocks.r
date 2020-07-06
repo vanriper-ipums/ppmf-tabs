@@ -7,7 +7,7 @@
 
 require(data.table)
 
-# Constants
+#### Constants ####
 nhgis_col_classes <- c("character",
                        "character",
                        "character",
@@ -49,6 +49,11 @@ nhgis_col_classes <- c("character",
                        "character",
                        "integer")
 
-# 0. Read in block csv to a data.table. We only need colClasses in fread because NHGIS already has 
-# column headers in the CSV.  
+#### Read in NHGIS block CSV as data.table ####
+# We only need colClasses in fread because NHGIS already has column headers in the CSV.  
 dt_nhgis <- fread("data/nhgis1329_ds172_2010_block.csv", sep = ",", colClasses = nhgis_col_classes)
+
+#### Delete fields that we're not using now #### 
+delete_vars <- c("YEAR", "REGIONA", "DIVISIONA", "STATE", "COUNTY", "CONCITA", "RES_ONLYA", "TRUSTA", "AITSCEA", "TTRACTA", "TBLKGRPA", "METDIVA", "CSAA", "NECTAA", "NECTADIVA", "CNECTAA", "URBRURALA", "ZCTA5A", "SUBMCDA", "SDELMA", "SDSECA", "SABINSA", "NAME", "H7V001")
+
+dt_nhgis[, (delete_vars) := NULL]
