@@ -45,27 +45,3 @@ cols_p11 <- c(geog_vars, cols_p11)
 cols_p12 <- c(geog_vars, cols_p12)
 cols_p42 <- c(geog_vars, cols_p42)
 
-
-# col_order_p1_p3 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK", "H7V001_dp",  "H7X001_dp", "H7X002_dp",  "H7X003_dp", "H7X004_dp",  "H7X005_dp",  "H7X006_dp",  "H7X007_dp",  "H7X008_dp")
-# 
-# col_order_p4 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK", "H7Y001_dp", "H7Y002_dp", "H7Y003_dp")
-# 
-# col_order_p5 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK",
-#                   "H7Z001_dp",
-#                   "H7Z002_dp", "H7Z003_dp" , "H7Z004_dp" , "H7Z005_dp" , "H7Z006_dp" , "H7Z007_dp" , "H7Z008_dp" , "H7Z009_dp",
-#                   "H7Z010_dp", "H7Z011_dp" , "H7Z012_dp" , "H7Z013_dp" , "H7Z014_dp" , "H7Z015_dp" , "H7Z016_dp" , "H7Z017_dp"
-# )
-# 
-# col_order_p8 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-# col_order_p9 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-# col_order_p10 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-# col_order_p11 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-# col_order_p12 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-# col_order_p42 <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
-# 
-#   
