@@ -78,7 +78,7 @@ p9[, H7Y002_dp := NULL]
 setcolorder(p9, cols_p9)
 
 # Write out to CSV for further processing
-fwrite(block, file = "data/output/block_p9.csv")
+fwrite(p9, file = "data/output/block_p9.csv")
 
 #### P11 ####
 # This section fixes up table P11
