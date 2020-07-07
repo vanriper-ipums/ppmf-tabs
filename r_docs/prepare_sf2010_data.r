@@ -5,11 +5,14 @@
 # This script reads in NHGIS extracts, adds the _sf suffix to each variable, keeps required columns, and write out
 # results to a new CSV (prepended with sf_). These sf_* files will be merged with the DP files and then written 
 # out to a final dataset.
+# 
+# You must extract the ZIP files first and copy the block file in to the /nhgis133X_csv/ folder before running 
+# this script. 
 
 require(data.table)
 
 # file path
-file_path <- "data/sf1/nhgis1333_csv/"
+file_path <- "data/sf1/nhgis1336_csv/"
 
 # gisjoin and name vectors 
 constant_vars_from <- c("GISJOIN", "NAME")
