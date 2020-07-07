@@ -9,19 +9,19 @@ require(data.table)
 #### Set keys in dt and recodes ####
 setkeyv(dt, c("QSEX", "CENHISP", "CENRACE", "QAGE", "GQTYPE"))
 setkey(sex, "QSEX")
-setkey(hisp, "CENHISP")
+setkey(cenhisp, "CENHISP")
 setkey(race7, "CENRACE")
 setkey(race63, "CENRACE")
-setkey(race_alone_combo, "CENRACE")
-setkey(age12, "QAGE")
-setkey(voting, "QAGE")
+#setkey(race_alone_combo, "CENRACE")
+setkey(age_p12, "QAGE")
+setkey(voting_age, "QAGE")
 setkey(gqtype, "GQTYPE")
 
 #### Sex ####
 dt <- sex[dt, on = "QSEX"]
 
 #### Hispanic ####
-dt <- hisp[dt, on = "CENHISP"]
+dt <- cenhisp[dt, on = "CENHISP"]
 
 #### Race7 ####
 dt <- race7[dt, on = "CENRACE"]
@@ -30,10 +30,10 @@ dt <- race7[dt, on = "CENRACE"]
 dt <- race63[dt, on = "CENRACE"]
 
 #### Age12 ####
-dt <- age12[dt, on = "QAGE"]
+dt <- age_p12[dt, on = "QAGE"]
 
 #### Voting age #### 
-dt <- voting[dt, on = "QAGE"]
+dt <- voting_age[dt, on = "QAGE"]
 
 #### Gqtype #### 
 dt <- gqtype[dt, on = "GQTYPE"]
