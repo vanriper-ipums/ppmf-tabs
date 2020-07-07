@@ -9,6 +9,7 @@ require(tidyverse)
 file_path <- "data/headers/"
 file_list <- list.files(file_path, pattern = "^header_nhgis")
 
+#### Load in header CSVs and assign to data frames ####
 for(i in file_list){
   # create output df name
   j <- str_split(i, "\\.")
