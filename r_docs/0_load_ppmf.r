@@ -8,14 +8,9 @@
 
 require(data.table)
 
-# Constants 
-
+#### Define constants #### 
 # ppmf column types
 ppmf_col_classes <- c("character", "character", "character", "character", "character", "character", "character", "character", "character", "integer", "character", "character")
 
-# ppmf column names
-#ppmf_col_names <- c("vintage", "tabblkst", "tabblkcou", "tabtractce", "tabblkgrpce", "tabblk", "rtype", "gqtype", "qsex", "qage", "cenhisp", "cenrace")
-
-# 0. Read in CSV to a dt 
-#dt <- fread("data/ppmf_test.csv", sep = ",", colClasses = ppmf_col_classes)
+#### Load ppmf to a dt #### 
 dt <- fread("data/ppmf.csv", sep = ",", colClasses = ppmf_col_classes)
