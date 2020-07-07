@@ -8,21 +8,22 @@
 require(data.table)
 
 #### Load sf_* files from NHGIS #### 
-nhgis_path <- "data/sf1/nhgis1333_csv/"
-state_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_state.csv"))
-county_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_county.csv"))
-tract_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_tract.csv"))
-cousub_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_cty_sub.csv"))
-place_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_place.csv"))
-blkgrp_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_blck_grp.csv"))
-aianhh_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_aianhh.csv"))
-anrc_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_anrc.csv"))
-cbsa_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_cbsa.csv"))
-ua_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_urb_area.csv"))
-cd_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_cd110th-112th.csv"))
-sldu_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_stleg_up.csv"))
-sldl_n <- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_stleg_lo.csv"))
-sduni_n<- fread(paste0(nhgis_path, "sf_nhgis1333_ds172_2010_sd_uni.csv"))
+nhgis_path <- "data/sf1/nhgis1336_csv/sf_nhgis1336_ds172_2010_"
+state_n <- fread(paste0(nhgis_path, "state.csv"))
+county_n <- fread(paste0(nhgis_path, "county.csv"))
+tract_n <- fread(paste0(nhgis_path, "tract.csv"))
+cousub_n <- fread(paste0(nhgis_path, "cty_sub.csv"))
+place_n <- fread(paste0(nhgis_path, "place.csv"))
+blkgrp_n <- fread(paste0(nhgis_path, "blck_grp.csv"))
+aianhh_n <- fread(paste0(nhgis_path, "aianhh.csv"))
+anrc_n <- fread(paste0(nhgis_path, "anrc.csv"))
+cbsa_n <- fread(paste0(nhgis_path, "cbsa.csv"))
+ua_n <- fread(paste0(nhgis_path, "urb_area.csv"))
+cd_n <- fread(paste0(nhgis_path, "cd110th-112th.csv"))
+sldu_n <- fread(paste0(nhgis_path, "stleg_up.csv"))
+sldl_n <- fread(paste0(nhgis_path, "stleg_lo.csv"))
+sduni_n<- fread(paste0(nhgis_path, "sd_uni.csv"))
+block <- fread(paste0(nhgis_path, "block.csv"))
 
 #### remove dupes from anrc_n ####
 anrc_n <- unique(anrc_n)
@@ -42,6 +43,7 @@ cd_n <- cd[cd_n, on = "gisjoin"]
 sldu_n <- sldu[sldu_n, on = "gisjoin"]
 sldl_n <- sldl[sldl_n, on = "gisjoin"]
 sduni_n <- sduni[sduni_n, on = "gisjoin"]
+block_n <- block[block_n, on = "gisjoin"]
 
 #### setkeys for all dts for sort order #### 
 setkey(state_n, gisjoin)
@@ -58,6 +60,7 @@ setkey(cd_n, gisjoin)
 setkey(sldu_n, gisjoin)
 setkey(sldl_n, gisjoin)
 setkey(sduni_n, gisjoin)
+setkey(block_n, gisjoin)
 
 #### Fill in missing values with zeroes after joining NHGIS data #### 
 state_n[is.na(state_n)] = 0
@@ -74,29 +77,32 @@ cd_n[is.na(cd_n)] = 0
 sldu_n[is.na(sldu_n)] = 0
 sldl_n[is.na(sldl_n)] = 0
 sduni_n[is.na(sduni_n)] = 0
+block_n[is.na(block_n)] = 0
 
 #### Reorder columns to move gisjoin and name to beginning of dt #### 
 # Generate correct column order for all final dt
 dt_names <- names(state_n)
-elements_to_remove <- c("gisjoin", "name")
+elements_to_remove <- c("gisjoin", "name", "STATEA")
 dt_names <- dt_names[!(dt_names %in% elements_to_remove)]
-dt_names <- c("gisjoin", "name", dt_names)
+dt_names_state <- c("gisjoin", "name", "STATEA", dt_names)
+dt_names_nostate <- c("gisjoin", "name", dt_names)
 
 # Set column order for each dt 
-setcolorder(state_n, dt_names)
-setcolorder(county_n, dt_names)
-setcolorder(tract_n, dt_names)
-setcolorder(blkgrp_n, dt_names)
-setcolorder(cousub_n, dt_names)
-setcolorder(place_n, dt_names)
-setcolorder(aianhh_n, dt_names)
-setcolorder(anrc_n, dt_names)
-setcolorder(cbsa_n, dt_names)
-setcolorder(ua_n, dt_names)
-setcolorder(cd_n, dt_names)
-setcolorder(sldl_n, dt_names)
-setcolorder(sldu_n, dt_names)
-setcolorder(sduni_n, dt_names)
+setcolorder(state_n, dt_names_state)
+setcolorder(county_n, dt_names_state)
+setcolorder(tract_n, dt_names_state)
+setcolorder(blkgrp_n, dt_names_state)
+setcolorder(cousub_n, dt_names_state)
+setcolorder(place_n, dt_names_state)
+setcolorder(aianhh_n, dt_names_nostate)
+setcolorder(anrc_n, dt_names_nostate)
+setcolorder(cbsa_n, dt_names_nostate)
+setcolorder(ua_n, dt_names_nostate)
+setcolorder(cd_n, dt_names_state)
+setcolorder(sldl_n, dt_names_state)
+setcolorder(sldu_n, dt_names_state)
+setcolorder(sduni_n, dt_names_state)
+setcolorder(block_n, dt_names_state)
 
 #### Write out to final file #### 
 out_path <- "data/output/"
@@ -115,3 +121,4 @@ fwrite(cd_n, paste0(out_path, "cd_110th-112th_20200527.csv"))
 fwrite(sldl_n, paste0(out_path, "stleg_lo_20200527.csv"))
 fwrite(sldu_n, paste0(out_path, "stleg_up_20200527.csv"))
 fwrite(sduni_n, paste0(out_path, "sd_uni_20200527.csv"))
+fwrite(block_n, paste0(out_path, "block_20200527.csv"))
