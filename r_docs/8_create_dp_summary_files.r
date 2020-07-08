@@ -88,7 +88,7 @@ tract <- dp[, lapply(.SD, sum),
 
 cousub <- dp[, lapply(.SD, sum),
             by = .(STATEA, COUNTYA, COUSUBA),
-            .SDcols = H7V001_dp:H80010_dp][, gisjoin := paste0("G", STATEA, "0", COUNTYA, "0", COUSUBA)][, c("COUNTYA", "COUSUBA") := NULL]
+            .SDcols = H7V001_dp:H80010_dp][, gisjoin := paste0("G", STATEA, "0", COUNTYA, "0", COUSUBA)][, c("STATEA", "COUNTYA", "COUSUBA") := NULL]
 
 place <- dp[, lapply(.SD, sum),
              by = .(STATEA, PLACEA),
