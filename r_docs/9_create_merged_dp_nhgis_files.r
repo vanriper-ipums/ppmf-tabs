@@ -23,7 +23,7 @@ cd_n <- fread(paste0(nhgis_path, "cd110th-112th.csv"))
 sldu_n <- fread(paste0(nhgis_path, "stleg_up.csv"))
 sldl_n <- fread(paste0(nhgis_path, "stleg_lo.csv"))
 sduni_n<- fread(paste0(nhgis_path, "sd_uni.csv"))
-block <- fread(paste0(nhgis_path, "block.csv"))
+block_n <- fread(paste0(nhgis_path, "block.csv"))
 
 #### remove dupes from anrc_n ####
 anrc_n <- unique(anrc_n)
@@ -79,12 +79,25 @@ sldl_n[is.na(sldl_n)] = 0
 sduni_n[is.na(sduni_n)] = 0
 block_n[is.na(block_n)] = 0
 
+#### Substring to add state fips code ####
+state_n <- state_n[, state := substr(gisjoin, 2, 3)]
+county_n <- county_n[, state := substr(gisjoin, 2, 3)]
+tract_n <- tract_n[, state := substr(gisjoin, 2, 3)]
+blkgrp_n <- blkgrp_n[, state := substr(gisjoin, 2, 3)]
+block_n <- block_n[, state := substr(gisjoin, 2, 3)]
+place_n <- place_n[, state := substr(gisjoin, 2, 3)]
+cousub_n <- cousub_n[, state := substr(gisjoin, 2, 3)]
+cd_n <- cd_n[, state := substr(gisjoin, 2, 3)]
+sldl_n <- sldl_n[, state := substr(gisjoin, 2, 3)]
+sldu_n <- sldu_n[, state := substr(gisjoin, 2, 3)]
+sduni_n <- sduni_n[, state := substr(gisjoin, 2, 3)]
+
 #### Reorder columns to move gisjoin and name to beginning of dt #### 
 # Generate correct column order for all final dt
 dt_names <- names(state_n)
-elements_to_remove <- c("gisjoin", "name", "STATEA")
+elements_to_remove <- c("gisjoin", "name", "state")
 dt_names <- dt_names[!(dt_names %in% elements_to_remove)]
-dt_names_state <- c("gisjoin", "name", "STATEA", dt_names)
+dt_names_state <- c("gisjoin", "name", "state", dt_names)
 dt_names_nostate <- c("gisjoin", "name", dt_names)
 
 # Set column order for each dt 
