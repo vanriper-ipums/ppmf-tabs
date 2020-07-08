@@ -24,7 +24,7 @@ for(row in 1:nrow(xwalk)){
   x <- dt[state == xwalk$code[row],]
   
   # write out to CSV 
-  out_file <- paste0(data_file_path, "block_", lower(xwalk$abb[row]), "_20200527.csv")
+  out_file <- paste0(data_file_path, "block_", tolower(xwalk$abb[row]), "_20200527.csv")
   fwrite(x, out_file)
 
   #assign(xwalk$abb[row], x)
