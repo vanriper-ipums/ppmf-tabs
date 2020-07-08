@@ -27,9 +27,9 @@ geog_vars <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
 #### Create vector if "integer" values #### 
 #int_p1_p3 <- rep("integer", 8)
 int_p4 <- rep("integer", 3)
-int_p9 <- rep("integer", 69)
+int_p9 <- rep("integer", 71)
 int_p10 <- rep("integer", 71)
-int_p11 <- rep("integer", 69)
+int_p11 <- rep("integer", 71)
 #int_p5 <- rep("integer", 14)
 
 #### Column classes ####
@@ -57,9 +57,9 @@ setkeyv(p11, geog_vars)
 
 #### Correct a couple of sums in P9 ####
 # Pop of 1 race
-p9[, H73004_dp := H73005_dp + H73006_dp + H73007_dp + H73008_dp + H73009_dp + H73010_dp]
+#p9[, H73004_dp := H73005_dp + H73006_dp + H73007_dp + H73008_dp + H73009_dp + H73010_dp]
 # Non-Hispanic total 
-p9[, H73003_dp := H73004_dp + H73011_dp]
+#p9[, H73003_dp := H73004_dp + H73011_dp]
 
 #### Join P4 to P9 to get the correct Hispanic total ####
 p9 <- p4[p9]
@@ -89,9 +89,9 @@ p10 <- p10[, ..p10_var]
 
 #### Correct a couple of sums in P11 ####
 # Pop of 1 race
-p11[, H75004_dp := H75005_dp + H75006_dp + H75007_dp + H75008_dp + H75009_dp + H75010_dp]
+#p11[, H75004_dp := H75005_dp + H75006_dp + H75007_dp + H75008_dp + H75009_dp + H75010_dp]
 # Non-Hispanic total 
-p11[, H75003_dp := H75004_dp + H75011_dp]
+#p11[, H75003_dp := H75004_dp + H75011_dp]
 
 #### Join P10 to get total pop >= 18 #### 
 p11 <- p10[p11]

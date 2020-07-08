@@ -159,14 +159,14 @@ dt[, (vars) := NULL]
 
 #### Sex by Age_p12 #### 
 # Create vector with dummy var names 
-vars <- header_sex_age12$header
+vars <- header_sex_age_p12$header
 
 # Add dummies to dt
 dt[, (vars) := 0]
 
 # For each value in header_sex_age12, set appropriate P var to 1
-for(row in 1:nrow(header_sex_age12)){
-  dt[, header_sex_age12$header[row] := fifelse((sex == header_sex_age12$sex[row] & age_p12 == header_sex_age12$age_p12[row]), 1, 0)]
+for(row in 1:nrow(header_sex_age_p12)){
+  dt[, header_sex_age_p12$header[row] := fifelse((sex == header_sex_age_p12$sex[row] & age_p12 == header_sex_age_p12$age_p12[row]), 1, 0)]
 }
 
 # Create block-level total pops
