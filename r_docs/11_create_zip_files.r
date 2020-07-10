@@ -15,5 +15,5 @@ file_list <- list.files(file_path, pattern = glob2rx("*.csv"))
 #### Loop over file_list creating a ZIP for each ####
 for(i in file_list){
   j = str_split(i, "\\.")
-  zipr(paste0(file_path, j[[1]][1],".zip"), c(paste0(file_path, i), paste0(file_path, "codebook.txt")))
+  zipr(paste0(file_path, j[[1]][1],".zip"), c(paste0(file_path, i), paste0(file_path, "nhgis_ppdd_20200527_codebook.txt")))
 }
