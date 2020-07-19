@@ -9,11 +9,11 @@ require(data.table)
 #### Source the correct_column_order.r script #### 
 source("r_docs/correct_column_order.r")
 
-#### Total population #### 
+#### P1. Total population #### 
 # This dummy is easiast to fill in - all records get a 1
 dt[, H7V001_dp := 1]
 
-#### Race7 #### 
+#### P3. Race7 #### 
 # Create vector with dummy var names 
 vars <- header_race7$header
 
@@ -43,7 +43,7 @@ fwrite(block, file = "data/output/block_p1_p3.csv")
 dt[, H7V001_dp := NULL]
 dt[, (vars) := NULL]
 
-#### Hispanic/Not Hispanic #### 
+#### P4. Hispanic/Not Hispanic #### 
 # Create vector with dummy var names 
 vars <- header_hisp$header
 
@@ -72,7 +72,7 @@ fwrite(block, file = "data/output/block_p4.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Hispanic by Race7 ####
+#### P5. Hispanic by Race7 ####
 # Create vector with dummy var names 
 vars <- header_hisp_race7$header
 
@@ -89,7 +89,7 @@ block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H7Z003_dp:H7Z017_dp]
 
-# Create H7Z001_dp, and the non-hisp/hisp subtotals 
+# Create H71001_dp, and the non-hisp/hisp races tallied subtotals 
 block[, H7Z002_dp := H7Z003_dp + H7Z004_dp + H7Z005_dp + H7Z006_dp + H7Z007_dp + H7Z008_dp + H7Z009_dp]
 block[, H7Z010_dp := H7Z011_dp + H7Z012_dp + H7Z013_dp + H7Z014_dp + H7Z015_dp + H7Z016_dp + H7Z017_dp]
 block[, H7Z001_dp := H7Z002_dp + H7Z010_dp]
@@ -103,7 +103,54 @@ fwrite(block, file = "data/output/block_p5.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Major GQ type #### 
+#### P6. Total races tallies by race ####
+# The recode file for this table essentially serves as the dummy vars for this table. Thus, 
+# we don't need to add and compute dummy vars. All we need to do is sum by block ID. 
+
+# Create block-level counts
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H70001_dp:H70007_dp]
+
+# Re-order columns 
+# setcolorder(block, cols_p6)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p6.csv")
+
+#### P7. Total races tallies by race by Hispanic/Not Hispanic ####
+vars <- header_hisp_races_tallied$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# # For each value in header_hisp_races_tallied, set appropriate header var to 1
+# use the get() function to convert values in header_hisp_races_tallied to variable names
+for(row in 1:nrow(header_hisp_races_tallied)){
+  dt[, header_hisp_races_tallied$header[row] := fifelse((get(header_hisp_races_tallied$raceTally_alone_combo[row]) == 1 & hisp == header_hisp_races_tallied$hisp[row]), 1, 0)]
+}
+
+
+# Create block-level counts
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H71003_dp:H71015_dp]
+
+# Create H71001_dp total races tallied, and the non-hisp/hisp races tallied subtotals 
+block[, H71002_dp := rowSums(.SD), .SDcols = H71003_dp:H71008_dp]
+block[, H71009_dp := rowSums(.SD), .SDcols = H71010_dp:H71015_dp]
+block[, H71001_dp := rowSums(.SD), .SDcols = H71002_dp:H71009_dp]
+
+# Re-order columns 
+# setcolorder(block, cols_p7)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p7.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### P42. Major GQ type #### 
 # Create vector with dummy var names 
 vars <- header_major_gqtype$header
 
@@ -115,7 +162,7 @@ for(row in 1:nrow(header_major_gqtype)){
   dt[, header_major_gqtype$header[row] := fifelse(gqtypen == header_major_gqtype$recode[row], 1, 0)]
 }
 
-# Create block-level total pops
+# Create block-level counts
 block <- dt[, lapply(.SD, sum),
             by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
             .SDcols = H80003_dp:H80010_dp]
@@ -157,7 +204,7 @@ dt[, (vars) := NULL]
 # # Set vars to null to remove from dt
 # dt[, (vars) := NULL]
 
-#### Sex by Age_p12 #### 
+#### P12. Sex by Age #### 
 # Create vector with dummy var names 
 vars <- header_sex_age_p12$header
 
@@ -187,6 +234,346 @@ setcolorder(block, cols_p12)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p12.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### P12A. Sex by Age for White Alone Population #### 
+# Create vector with dummy var names 
+vars <- header_sex_age_p12A$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age12A, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12A)){
+  dt[, header_sex_age_p12A$header[row] := fifelse((sex == header_sex_age_p12A$sex[row] & get(header_sex_age_p12A$age_p12[row]) == 1 & race7 == header_sex_age_p12A$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9A003_dp:H9A049_dp]
+
+# Generate correct subtotals (sex) and total pop in sex by age  
+# 3 through 25 - males
+block[, H9A002_dp := rowSums(.SD), .SDcols = H9A003_dp:H9A025_dp]
+# 27 through 49 - females
+block[, H9A026_dp := rowSums(.SD), .SDcols = H9A027_dp:H9A049_dp] 
+# total White Alone pop      
+block[, H9A001_dp := H9A002_dp + H9A026_dp]
+
+# Re-order columns 
+setcolorder(block, cols_p12A)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12A.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12B. Sex by Age for Black Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12B$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12B, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12B)){
+  dt[, header_sex_age_p12B$header[row] := fifelse((sex == header_sex_age_p12B$sex[row] & get(header_sex_age_p12B$age_p12[row]) == 1 & race7 == header_sex_age_p12B$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9B003_dp:H9B049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9B002_dp := rowSums(.SD), .SDcols = H9B003_dp:H9B025_dp]
+# 27 through 49 - females
+block[, H9B026_dp := rowSums(.SD), .SDcols = H9B027_dp:H9B049_dp]
+# total Black Alone pop
+block[, H9B001_dp := H9B002_dp + H9B026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12B)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12B.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12C. Sex by Age for AIAN Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12C$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12C, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12C)){
+  dt[, header_sex_age_p12C$header[row] := fifelse((sex == header_sex_age_p12C$sex[row] & get(header_sex_age_p12C$age_p12[row]) == 1 & race7 == header_sex_age_p12C$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9C003_dp:H9C049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9C002_dp := rowSums(.SD), .SDcols = H9C003_dp:H9C025_dp]
+# 27 through 49 - females
+block[, H9C026_dp := rowSums(.SD), .SDcols = H9C027_dp:H9C049_dp]
+# total American Indian/Alaska Native Alone pop
+block[, H9C001_dp := H9C002_dp + H9C026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12C)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12C.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12D. Sex by Age for Asian Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12D$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12D, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12D)){
+  dt[, header_sex_age_p12D$header[row] := fifelse((sex == header_sex_age_p12D$sex[row] & get(header_sex_age_p12D$age_p12[row]) == 1 & race7 == header_sex_age_p12D$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9D003_dp:H9D049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9D002_dp := rowSums(.SD), .SDcols = H9D003_dp:H9D025_dp]
+# 27 through 49 - females
+block[, H9D026_dp := rowSums(.SD), .SDcols = H9D027_dp:H9D049_dp]
+# total Asian Alone pop
+block[, H9D001_dp := H9D002_dp + H9D026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12D)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12D.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12E. Sex by Age for NHPI Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12E$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12E, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12E)){
+  dt[, header_sex_age_p12E$header[row] := fifelse((sex == header_sex_age_p12E$sex[row] & get(header_sex_age_p12E$age_p12[row]) == 1 & race7 == header_sex_age_p12E$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9E003_dp:H9E049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9E002_dp := rowSums(.SD), .SDcols = H9E003_dp:H9E025_dp]
+# 27 through 49 - females
+block[, H9E026_dp := rowSums(.SD), .SDcols = H9E027_dp:H9E049_dp]
+# total NHPI Alone pop
+block[, H9E001_dp := H9E002_dp + H9E026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12E)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12E.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12F. Sex by Age for SOR Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12F$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12F, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12F)){
+  dt[, header_sex_age_p12F$header[row] := fifelse((sex == header_sex_age_p12F$sex[row] & get(header_sex_age_p12F$age_p12[row]) == 1 & race7 == header_sex_age_p12F$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9F003_dp:H9F049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9F002_dp := rowSums(.SD), .SDcols = H9F003_dp:H9F025_dp]
+# 27 through 49 - females
+block[, H9F026_dp := rowSums(.SD), .SDcols = H9F027_dp:H9F049_dp]
+# total SOR Alone pop
+block[, H9F001_dp := H9F002_dp + H9F026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12F)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12F.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12G. Sex by Age for Two or more races population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12G$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12G, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12G)){
+  dt[, header_sex_age_p12G$header[row] := fifelse((sex == header_sex_age_p12G$sex[row] & get(header_sex_age_p12G$age_p12[row]) == 1 & race7 == header_sex_age_p12G$race7[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9G003_dp:H9G049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9G002_dp := rowSums(.SD), .SDcols = H9G003_dp:H9G025_dp]
+# 27 through 49 - females
+block[, H9G026_dp := rowSums(.SD), .SDcols = H9G027_dp:H9G049_dp]
+# total Two or more races pop
+block[, H9G001_dp := H9G002_dp + H9G026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12G)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12G.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12H. Sex by Age for Hispanic/Latino Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12H$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12H, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12H)){
+  dt[, header_sex_age_p12H$header[row] := fifelse((sex == header_sex_age_p12H$sex[row] & get(header_sex_age_p12H$age_p12[row]) == 1 & hisp == header_sex_age_p12H$hisp[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9H003_dp:H9H049_dp]
+
+# Generate correct subtotals (sex) and pop in sex by age
+# 3 through 25 - males
+block[, H9H002_dp := rowSums(.SD), .SDcols = H9H003_dp:H9H025_dp]
+# 27 through 49 - females
+block[, H9H026_dp := rowSums(.SD), .SDcols = H9H027_dp:H9H049_dp]
+# total Hispanic/Latino pop
+block[, H9H001_dp := H9H002_dp + H9H026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12H)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12H.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### p12I. Sex by Age for White Alone, Not Hispanic/Latino Alone Population ####
+# Create vector with dummy var names
+vars <- header_sex_age_p12I$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age_p12I, set appropriate dummy var to 1
+for(row in 1:nrow(header_sex_age_p12I)){
+  dt[, header_sex_age_p12I$header[row] := fifelse((sex == header_sex_age_p12I$sex[row] & get(header_sex_age_p12I$age_p12[row]) == 1 & race7 == header_sex_age_p12I$race7[row] & hisp == header_sex_age_p12I$hisp[row]), 1, 0)]
+}
+
+# Create block-level pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H9I003_dp:H9I049_dp]
+
+# Generate correct subtotals (sex) and total pop in sex by age
+# 3 through 25 - males
+block[, H9I002_dp := rowSums(.SD), .SDcols = H9I003_dp:H9I025_dp]
+# 27 through 49 - females
+block[, H9I026_dp := rowSums(.SD), .SDcols = H9I027_dp:H9I049_dp]
+# total White Alone, not Hispanic/Latino pop
+block[, H9I001_dp := H9I002_dp + H9I026_dp]
+
+# Re-order columns
+setcolorder(block, cols_p12I)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p12I.csv")
+
+# Set vars to null to remove from dt
+dt[, (vars) := NULL]
+
+#### P14. Sex by Age (single year) for population under age 20 #### 
+# Create vector with dummy var names 
+vars <- header_sex_age_p14$header
+
+# Add dummies to dt
+dt[, (vars) := 0]
+
+# For each value in header_sex_age12, set appropriate P var to 1
+for(row in 1:nrow(header_sex_age_p14)){
+  dt[, header_sex_age_p14$header[row] := fifelse((sex == header_sex_age_p14$sex[row] & age_p14 == header_sex_age_p14$age_p14[row]), 1, 0)]
+}
+
+# Create block-level total pops
+block <- dt[, lapply(.SD, sum),
+            by = .(TABBLKST, TABBLKCOU, TABTRACTCE, TABBLK),
+            .SDcols = H78003_dp:H78043_dp]
+
+# Generate correct subtotals (sex) and total pop in sex by age (single year of age, 0-19)  
+# 3 through 22 - males
+block[, H78002_dp := rowSums(.SD), .SDcols = H78003_dp:H78022_dp] 
+## 24 through 43 - females
+block[, H78023_dp := rowSums(.SD), .SDcols = H78024_dp:H78043_dp]
+# total pop under 20 years of age
+block[, H78001_dp := rowSums(.SD), .SDcols = H78003_dp:H78043_dp]
+
+# Re-order columns 
+#setcolorder(block, cols_p14)
+
+# Write out to CSV for further processing
+fwrite(block, file = "data/output/block_p14.csv")
 
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
