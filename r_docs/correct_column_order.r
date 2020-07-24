@@ -13,7 +13,7 @@ geog_vars <- c("TABBLKST", "TABBLKCOU", "TABTRACTCE", "TABBLK")
 
 #### Read in NHGIS state extract to get column headers in correct order #### 
 #sf1 <- fread("data/sf1/nhgis1333_ds172_2010_state.csv")
-sf1 <- fread("data/sf1/nhgis1346_csv/nhgis1346_ds172_2010_state.csv")
+sf1 <- fread("data/sf1/nhgis1348_csv/nhgis1348_ds172_2010_state.csv")
 
 #### Keep only sf1_names that start with H* #### 
 sf1_names <- grep("^H", names(sf1), value = TRUE)
