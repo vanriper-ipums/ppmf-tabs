@@ -6,7 +6,7 @@
 # results to a new CSV (prepended with sf_). These sf_* files will be merged with the DP files and then written 
 # out to a final dataset.
 # 
-# You must extract the ZIP files first and copy the block file in to the /nhgis133X_csv/ folder before running 
+# You must extract the ZIP files first to the /nhgis1348_csv/ folder before running 
 # this script. 
 
 require(data.table)
