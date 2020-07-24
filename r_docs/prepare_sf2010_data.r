@@ -12,7 +12,7 @@
 require(data.table)
 
 # file path
-file_path <- "data/sf1/nhgis1346_csv/"
+file_path <- "data/sf1/nhgis1348_csv/"
 
 # gisjoin and name vectors 
 constant_vars_from <- c("GISJOIN", "NAME")
