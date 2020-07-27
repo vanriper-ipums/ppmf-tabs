@@ -9,6 +9,7 @@ require(data.table)
 
 #### Load sf_* files from NHGIS #### 
 nhgis_path <- "data/sf1/nhgis1336_csv/sf_nhgis1336_ds172_2010_"
+nhgis_path <- "data/sf1/nhgis1348_csv/sf_nhgis1348_ds172_2010_"
 state_n <- fread(paste0(nhgis_path, "state.csv"))
 county_n <- fread(paste0(nhgis_path, "county.csv"))
 tract_n <- fread(paste0(nhgis_path, "tract.csv"))
@@ -23,6 +24,9 @@ cd_n <- fread(paste0(nhgis_path, "cd110th-112th.csv"))
 sldu_n <- fread(paste0(nhgis_path, "stleg_up.csv"))
 sldl_n <- fread(paste0(nhgis_path, "stleg_lo.csv"))
 sduni_n<- fread(paste0(nhgis_path, "sd_uni.csv"))
+aianhh_144_n <- fread(paste0(nhgis_path, "aianhh_144.csv"))
+county_282_n <- fread(paste0(nhgis_path, "county_282.csv"))
+cty_sub_261_n <- fread(paste0(nhgis_path, "cty_sub_261.csv"))
 block_n <- fread(paste0(nhgis_path, "block.csv"))
 
 #### remove dupes from anrc_n ####
@@ -43,6 +47,9 @@ cd_n <- cd[cd_n, on = "gisjoin"]
 sldu_n <- sldu[sldu_n, on = "gisjoin"]
 sldl_n <- sldl[sldl_n, on = "gisjoin"]
 sduni_n <- sduni[sduni_n, on = "gisjoin"]
+aianhh_144_n <- aianhh_144[aianhh_144_n, on = "gisjoin"]
+county_282_n <- county_282[county_282_n, on = "gisjoin"]
+cty_sub_261_n <- cty_sub_261[cty_sub_261_n, on = "gisjoin"]
 block_n <- block[block_n, on = "gisjoin"]
 
 #### setkeys for all dts for sort order #### 
@@ -60,6 +67,9 @@ setkey(cd_n, gisjoin)
 setkey(sldu_n, gisjoin)
 setkey(sldl_n, gisjoin)
 setkey(sduni_n, gisjoin)
+setkey(aianhh_144_n, gisjoin)
+setkey(county_282_n, gisjoin)
+setkey(cty_sub_261_n, gisjoin)
 setkey(block_n, gisjoin)
 
 #### Fill in missing values with zeroes after joining NHGIS data #### 
@@ -77,20 +87,29 @@ cd_n[is.na(cd_n)] = 0
 sldu_n[is.na(sldu_n)] = 0
 sldl_n[is.na(sldl_n)] = 0
 sduni_n[is.na(sduni_n)] = 0
-block_n[is.na(block_n)] = 0
+aianhh_144_n[is.na(aianhh_144_n)] = 0
+county_282_n[is.na(county_282_n)] = 0
+cty_sub_261_n[is.na(cty_sub_261_n)] = 0
+#block_n[is.na(block_n)] = 0
+
+block <- block_n[, 1:883]
+block[is.na(block)] = 0
 
 #### Substring to add state fips code ####
 state_n <- state_n[, state := substr(gisjoin, 2, 3)]
 county_n <- county_n[, state := substr(gisjoin, 2, 3)]
 tract_n <- tract_n[, state := substr(gisjoin, 2, 3)]
 blkgrp_n <- blkgrp_n[, state := substr(gisjoin, 2, 3)]
-block_n <- block_n[, state := substr(gisjoin, 2, 3)]
 place_n <- place_n[, state := substr(gisjoin, 2, 3)]
 cousub_n <- cousub_n[, state := substr(gisjoin, 2, 3)]
 cd_n <- cd_n[, state := substr(gisjoin, 2, 3)]
 sldl_n <- sldl_n[, state := substr(gisjoin, 2, 3)]
 sldu_n <- sldu_n[, state := substr(gisjoin, 2, 3)]
 sduni_n <- sduni_n[, state := substr(gisjoin, 2, 3)]
+aianhh_144_n <- aianhh_144_n[, state := substr(gisjoin, 2, 3)]
+county_282_n <- county_282_n[, state := substr(gisjoin, 2, 3)]
+cty_sub_261_n <- cty_sub_261_n[, state := substr(gisjoin, 2, 3)]
+#block_n <- block_n[, state := substr(gisjoin, 2, 3)]
 
 #### Reorder columns to move gisjoin and name to beginning of dt #### 
 # Generate correct column order for all final dt
@@ -115,7 +134,10 @@ setcolorder(cd_n, dt_names_state)
 setcolorder(sldl_n, dt_names_state)
 setcolorder(sldu_n, dt_names_state)
 setcolorder(sduni_n, dt_names_state)
-setcolorder(block_n, dt_names_state)
+setcolorder(aianhh_144_n, dt_names_state)
+setcolorder(county_282_n, dt_names_state)
+setcolorder(cty_sub_261_n, dt_names_state)
+#setcolorder(block_n, dt_names_state)
 
 #### Write out to final file #### 
 file_name_stub <- "nhgis_ppdd_20200527_"
@@ -135,4 +157,7 @@ fwrite(cd_n, paste0(out_path, file_name_stub, "cd_110th-112th.csv"))
 fwrite(sldl_n, paste0(out_path, file_name_stub, "stleg_lo.csv"))
 fwrite(sldu_n, paste0(out_path, file_name_stub, "stleg_up.csv"))
 fwrite(sduni_n, paste0(out_path, file_name_stub, "sd_uni.csv"))
-fwrite(block_n, paste0(out_path, file_name_stub, "block.csv"))
+fwrite(aianhh_144_n, paste0(out_path, file_name_stub, "aianhh_144.csv"))
+fwrite(county_282_n, paste0(out_path, file_name_stub, "county_282.csv"))
+fwrite(cty_sub_261_n, paste0(out_path, file_name_stub, "cty_sub_261.csv"))
+#fwrite(block_n, paste0(out_path, file_name_stub, "block.csv"))
