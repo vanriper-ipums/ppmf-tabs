@@ -113,7 +113,7 @@ block <- dt[, lapply(.SD, sum),
             .SDcols = H70001_dp:H70007_dp]
 
 # Re-order columns 
-# setcolorder(block, cols_p6)
+setcolorder(block, cols_p6)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p6.csv")
@@ -142,7 +142,7 @@ block[, H71009_dp := rowSums(.SD), .SDcols = H71010_dp:H71015_dp]
 block[, H71001_dp := rowSums(.SD), .SDcols = H71002_dp:H71009_dp]
 
 # Re-order columns 
-# setcolorder(block, cols_p7)
+setcolorder(block, cols_p7)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p7.csv")
@@ -235,7 +235,7 @@ setcolorder(block, cols_p12)
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p12.csv")
 
-# Set vars to null to remove from dt
+# Don't set p12 vars to NULL because I need them for the p12A-I dummies. 
 dt[, (vars) := NULL]
 
 #### P12A. Sex by Age for White Alone Population #### 
@@ -247,7 +247,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age12A, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12A)){
-  dt[, header_sex_age_p12A$header[row] := fifelse((sex == header_sex_age_p12A$sex[row] & get(header_sex_age_p12A$age_p12[row]) == 1 & race7 == header_sex_age_p12A$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12A$header[row] := fifelse((sex == header_sex_age_p12A$sex[row] & age_p12 == header_sex_age_p12A$age_p12[row] & race7 == header_sex_age_p12A$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -281,7 +281,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12B, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12B)){
-  dt[, header_sex_age_p12B$header[row] := fifelse((sex == header_sex_age_p12B$sex[row] & get(header_sex_age_p12B$age_p12[row]) == 1 & race7 == header_sex_age_p12B$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12B$header[row] := fifelse((sex == header_sex_age_p12B$sex[row] & age_p12 == header_sex_age_p12B$age_p12[row] & race7 == header_sex_age_p12B$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -315,7 +315,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12C, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12C)){
-  dt[, header_sex_age_p12C$header[row] := fifelse((sex == header_sex_age_p12C$sex[row] & get(header_sex_age_p12C$age_p12[row]) == 1 & race7 == header_sex_age_p12C$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12C$header[row] := fifelse((sex == header_sex_age_p12C$sex[row] & age_p12 == header_sex_age_p12C$age_p12[row] & race7 == header_sex_age_p12C$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -349,7 +349,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12D, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12D)){
-  dt[, header_sex_age_p12D$header[row] := fifelse((sex == header_sex_age_p12D$sex[row] & get(header_sex_age_p12D$age_p12[row]) == 1 & race7 == header_sex_age_p12D$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12D$header[row] := fifelse((sex == header_sex_age_p12D$sex[row] & age_p12 == header_sex_age_p12D$age_p12[row] & race7 == header_sex_age_p12D$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -383,7 +383,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12E, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12E)){
-  dt[, header_sex_age_p12E$header[row] := fifelse((sex == header_sex_age_p12E$sex[row] & get(header_sex_age_p12E$age_p12[row]) == 1 & race7 == header_sex_age_p12E$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12E$header[row] := fifelse((sex == header_sex_age_p12E$sex[row] & age_p12 == header_sex_age_p12E$age_p12[row] & race7 == header_sex_age_p12E$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -417,7 +417,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12F, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12F)){
-  dt[, header_sex_age_p12F$header[row] := fifelse((sex == header_sex_age_p12F$sex[row] & get(header_sex_age_p12F$age_p12[row]) == 1 & race7 == header_sex_age_p12F$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12F$header[row] := fifelse((sex == header_sex_age_p12F$sex[row] & age_p12 == header_sex_age_p12F$age_p12[row] & race7 == header_sex_age_p12F$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -451,7 +451,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12G, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12G)){
-  dt[, header_sex_age_p12G$header[row] := fifelse((sex == header_sex_age_p12G$sex[row] & get(header_sex_age_p12G$age_p12[row]) == 1 & race7 == header_sex_age_p12G$race7[row]), 1, 0)]
+  dt[, header_sex_age_p12G$header[row] := fifelse((sex == header_sex_age_p12G$sex[row] & age_p12 == header_sex_age_p12G$age_p12[row] & race7 == header_sex_age_p12G$race7[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -485,7 +485,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12H, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12H)){
-  dt[, header_sex_age_p12H$header[row] := fifelse((sex == header_sex_age_p12H$sex[row] & get(header_sex_age_p12H$age_p12[row]) == 1 & hisp == header_sex_age_p12H$hisp[row]), 1, 0)]
+  dt[, header_sex_age_p12H$header[row] := fifelse((sex == header_sex_age_p12H$sex[row] & age_p12 == header_sex_age_p12H$age_p12[row] & hisp == header_sex_age_p12H$hisp[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -519,7 +519,7 @@ dt[, (vars) := 0]
 
 # For each value in header_sex_age_p12I, set appropriate dummy var to 1
 for(row in 1:nrow(header_sex_age_p12I)){
-  dt[, header_sex_age_p12I$header[row] := fifelse((sex == header_sex_age_p12I$sex[row] & get(header_sex_age_p12I$age_p12[row]) == 1 & race7 == header_sex_age_p12I$race7[row] & hisp == header_sex_age_p12I$hisp[row]), 1, 0)]
+  dt[, header_sex_age_p12I$header[row] := fifelse((sex == header_sex_age_p12I$sex[row] & age_p12 == header_sex_age_p12I$age_p12[row] & race7 == header_sex_age_p12I$race7[row] & hisp == header_sex_age_p12I$hisp[row]), 1, 0)]
 }
 
 # Create block-level pops
@@ -570,7 +570,7 @@ block[, H78023_dp := rowSums(.SD), .SDcols = H78024_dp:H78043_dp]
 block[, H78001_dp := rowSums(.SD), .SDcols = H78003_dp:H78043_dp]
 
 # Re-order columns 
-#setcolorder(block, cols_p14)
+setcolorder(block, cols_p14)
 
 # Write out to CSV for further processing
 fwrite(block, file = "data/output/block_p14.csv")
@@ -578,7 +578,7 @@ fwrite(block, file = "data/output/block_p14.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Race63 ####
+#### P8. Race63 ####
 # Create vector with dummy var names 
 vars <- header_race63$header
 
@@ -622,7 +622,7 @@ fwrite(block, file = "data/output/block_p8.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Hispanic or Not Hispanic by Race63 #### 
+#### P9. Hispanic or Not Hispanic by Race63 #### 
 # Create vector with dummy var names 
 vars <- header_hisp_race63$header
 
@@ -666,7 +666,7 @@ fwrite(block, file = "data/output/block_p9.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Race63 by Voting age #### 
+#### P10. Race63 by Voting age #### 
 # Create vector with dummy var names 
 vars <- header_race63_voting_age$header
 
@@ -710,7 +710,7 @@ fwrite(block, file = "data/output/block_p10.csv")
 # Set vars to null to remove from dt
 dt[, (vars) := NULL]
 
-#### Hispanic or Not Hispanic by Race63 by Voting age #### 
+#### P11. Hispanic or Not Hispanic by Race63 by Voting age #### 
 # Create vector with dummy var names 
 vars <- header_hisp_race63_voting_age$header
 
