@@ -12,6 +12,7 @@ file_list <- list.files(file_path)
 
 #### Col classes #### 
 recode_col_classes <- c("character", "integer")
+recode_col_classes_tally <- c("character", "integer", "integer", "integer", "integer", "integer", "integer")
 
 #### Load in recodes ####
 for(i in file_list){
@@ -19,12 +20,19 @@ for(i in file_list){
   j <- str_split(i, "\\.")
   dt_name <- j[[1]][1]
   
+#  if(str_detect(dt_name, "age")){
+#    x <- fread(paste0(file_path, i))
+#  } else {
+#    x <- fread(paste0(file_path, i), colClasses = recode_col_classes)
+#  }
+
   if(str_detect(dt_name, "age")){
     x <- fread(paste0(file_path, i))
-  } else {
+  } else if(str_detect(dt_name, "racesTally_alone")){
+    x <- fread(paste0(file_path, i), colClasses = recode_col_classes_tally)
+  } else{ 
     x <- fread(paste0(file_path, i), colClasses = recode_col_classes)
   }
-
   # read in i to a dt
 #  dt <- fread(paste0(file_path, i), colClasses = recode_col_classes)
   
