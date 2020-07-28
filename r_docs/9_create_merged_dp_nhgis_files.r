@@ -27,7 +27,7 @@ sduni_n<- fread(paste0(nhgis_path, "sd_uni.csv"))
 aianhh_144_n <- fread(paste0(nhgis_path, "aianhh_144.csv"))
 county_282_n <- fread(paste0(nhgis_path, "county_282.csv"))
 cty_sub_261_n <- fread(paste0(nhgis_path, "cty_sub_261.csv"))
-block_n <- fread(paste0(nhgis_path, "block.csv"))
+#block_n <- fread(paste0(nhgis_path, "block.csv"))
 
 #### remove dupes from anrc_n ####
 anrc_n <- unique(anrc_n)
@@ -50,7 +50,7 @@ sduni_n <- sduni[sduni_n, on = "gisjoin"]
 aianhh_144_n <- aianhh_144[aianhh_144_n, on = "gisjoin"]
 county_282_n <- county_282[county_282_n, on = "gisjoin"]
 cty_sub_261_n <- cty_sub_261[cty_sub_261_n, on = "gisjoin"]
-block_n <- block[block_n, on = "gisjoin"]
+#block_n <- block[block_n, on = "gisjoin"]
 
 #### setkeys for all dts for sort order #### 
 setkey(state_n, gisjoin)
@@ -70,7 +70,7 @@ setkey(sduni_n, gisjoin)
 setkey(aianhh_144_n, gisjoin)
 setkey(county_282_n, gisjoin)
 setkey(cty_sub_261_n, gisjoin)
-setkey(block_n, gisjoin)
+#setkey(block_n, gisjoin)
 
 #### Fill in missing values with zeroes after joining NHGIS data #### 
 state_n[is.na(state_n)] = 0
@@ -91,9 +91,6 @@ aianhh_144_n[is.na(aianhh_144_n)] = 0
 county_282_n[is.na(county_282_n)] = 0
 cty_sub_261_n[is.na(cty_sub_261_n)] = 0
 #block_n[is.na(block_n)] = 0
-
-block <- block_n[, 1:883]
-block[is.na(block)] = 0
 
 #### Substring to add state fips code ####
 state_n <- state_n[, state := substr(gisjoin, 2, 3)]
