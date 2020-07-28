@@ -1,4 +1,4 @@
-# 9_create_final_files.r
+# 9_create_merged_dp_nhgis_files.r
 # Author: David Van Riper
 # Created: 2020-07-06
 # 
