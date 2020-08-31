@@ -20,12 +20,6 @@ for(i in file_list){
   j <- str_split(i, "\\.")
   dt_name <- j[[1]][1]
   
-#  if(str_detect(dt_name, "age")){
-#    x <- fread(paste0(file_path, i))
-#  } else {
-#    x <- fread(paste0(file_path, i), colClasses = recode_col_classes)
-#  }
-
   if(str_detect(dt_name, "age")){
     x <- fread(paste0(file_path, i))
   } else if(str_detect(dt_name, "racesTally_alone")){
